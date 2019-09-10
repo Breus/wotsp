@@ -12,6 +12,13 @@ type params struct {
 	l1, l2, l int
 }
 
+// BB: this is a public Params struct used in MBPQS.
+type Params struct {
+	w         uint
+	logW      uint
+	l1, l2, l int
+}
+
 // Mode constants specify internal parameters according to the given mode of
 // operation. The available parameter sets include w = 4 and w = 16. The
 // default, which is used when no explicit mode is chosen, is w = 16. This
@@ -73,5 +80,15 @@ func (m Mode) String() string {
 		return "W256"
 	default:
 		return fmt.Sprintf("<invalid mode %d>", m)
+	}
+}
+
+func (p *params) export() (P *Params) {
+	return &Params{
+		w:    p.w,
+		logW: p.logW,
+		l1:   p.l1,
+		l2:   p.l2,
+		l:    p.l,
 	}
 }
