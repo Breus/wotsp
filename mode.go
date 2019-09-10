@@ -14,9 +14,9 @@ type params struct {
 
 // BB: this is a public Params struct used in MBPQS.
 type Params struct {
-	w         uint
-	logW      uint
-	l1, l2, l int
+	W         uint
+	LogW      uint
+	L1, L2, L int
 }
 
 // Mode constants specify internal parameters according to the given mode of
@@ -83,12 +83,18 @@ func (m Mode) String() string {
 	}
 }
 
-func (p *params) export() (P *Params) {
-	return &Params{
-		w:    p.w,
-		logW: p.logW,
-		l1:   p.l1,
-		l2:   p.l2,
-		l:    p.l,
+// Export internal params to externally accessible Param struct.
+func export(p params) (P Params) {
+	return Params{
+		W:    p.w,
+		LogW: p.logW,
+		L1:   p.l1,
+		L2:   p.l2,
+		L:    p.l,
 	}
+}
+
+func (m *Mode) Params() (P Params) {
+	return export(m.params())
+
 }
